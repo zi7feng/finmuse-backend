@@ -1,19 +1,8 @@
-# run.py
-from app import create_app, db
-from sqlalchemy import text
+from dotenv import load_dotenv
+from app import create_app
 
+load_dotenv()  # 加载 .env 文件
 app = create_app()
 
-@app.route("/ping")
-def ping():
-    return {"message": "pong"}
-
 if __name__ == "__main__":
-    with app.app_context():
-        try:
-            db.session.execute(text("SELECT 1"))
-            print("✅ Database connected successfully.")
-        except Exception as e:
-            print("❌ Database connection failed:", e)
-
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=True)
